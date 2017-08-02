@@ -38,7 +38,7 @@ export async function startup_shutdown(t: any, cb: (t: any) => void, locale?: st
     let bin_path = obs.DefaultBinPath;
     let data_path = obs.DefaultDataPath;
     let plugin_bin_path = obs.DefaultPluginPath;
-    let plugin_data_path = `D:/Projects/obs-studio-nan/test/node_modules/obs-studio-node/distribute/data/obs-plugins/%module%/data`;
+    let plugin_data_path = obs.DefaultPluginDataPath;
     console.log(`Bin Path: ${bin_path}`);
     console.log(`Data Path: ${data_path}`);
     console.log(`Plugin Bin Path: ${plugin_bin_path}`);
