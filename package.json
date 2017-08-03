@@ -12,10 +12,9 @@
     "runtimeVersion": "7.4.0",
     "arch": "x64"
   },
-  "devDependencies": {
-    "ava": "^0.20.0"
-  },
   "dependencies": {
-    "obs-studio-node": "file:./obs-studio-nan"
+    "ava": "^0.20.0",
+    "obs-studio-node": "file:./obs-studio-nan",
+    "typescript": "^2.4.2"
   }
 }
