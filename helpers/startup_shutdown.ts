@@ -32,7 +32,7 @@ export async function startup_shutdown(t: any, cb: (t: any) => void, locale?: st
         'scaleType': 0
     });
 
-    if (error) t.fail();
+    t.is(error, 0);
 
     /* Module Loading */
     let bin_path = obs.DefaultBinPath;
