@@ -6,10 +6,10 @@ import test from 'ava';
 test('scene item deletion', async t => {
     await startup_shutdown(t, (t) => {
         let test_source = 
-            obs.ObsInputFactory.create('color_source', 'test source');
+            obs.InputFactory.create('color_source', 'test source');
 
         let test_scene = 
-            obs.ObsSceneFactory.create('test scene');
+            obs.SceneFactory.create('test scene');
 
         let item1 = test_scene.add(test_source);
         let item2 = test_scene.add(test_source);

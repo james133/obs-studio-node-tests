@@ -7,11 +7,11 @@ test('startup and shutdown', async t => {
 
     let locale = 'en-US';
 
-    obs.ObsGlobal.startup(locale);
-    t.is(obs.ObsGlobal.initialized, true);
-    t.is(obs.ObsGlobal.locale, locale);
+    obs.Global.startup(locale);
+    t.is(obs.Global.initialized, true);
+    t.is(obs.Global.locale, locale);
 
-    obs.ObsGlobal.shutdown();
-    t.is(obs.ObsGlobal.initialized, false);
-    t.is(obs.ObsGlobal.locale, undefined);
+    obs.Global.shutdown();
+    t.is(obs.Global.initialized, false);
+    t.is(obs.Global.locale, undefined);
 });

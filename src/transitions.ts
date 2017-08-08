@@ -6,16 +6,16 @@ import test from 'ava';
 test('transition creation and destruction', async t => {
     await startup_shutdown(t, (t) => {
         let test_source_a = 
-            obs.ObsInputFactory.createPrivate('monitor_capture', 'test source a');
+            obs.InputFactory.createPrivate('monitor_capture', 'test source a');
 
         let test_source_b = 
-            obs.ObsInputFactory.createPrivate('color_source', 'test source b');
+            obs.InputFactory.createPrivate('color_source', 'test source b');
 
         let test_scene =
-            obs.ObsSceneFactory.create('test scene');
+            obs.SceneFactory.create('test scene');
 
         let test_transition = 
-            obs.ObsTransitionFactory.create('fade_transition', 'test transition');
+            obs.TransitionFactory.create('fade_transition', 'test transition');
 
         t.is(test_source_a.status, 0);
         t.is(test_source_a.name, 'test source a');

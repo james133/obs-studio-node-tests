@@ -17,6 +17,7 @@
     "helpers/startup_shutdown.ts",
     "src/startup.ts",
     "src/wrapper_startup.ts",
+    "src/export_check.ts",
     "src/filters.ts",
     "src/properties.ts",
     "src/source_creation.ts",

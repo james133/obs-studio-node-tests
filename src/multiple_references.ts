@@ -6,10 +6,10 @@ import test from 'ava';
 test('multiple references', async t => {
     await startup_shutdown(t, (t) => {
         let test_source = 
-            obs.ObsInputFactory.create('color_source', 'test source');
+            obs.InputFactory.create('color_source', 'test source');
 
-        let test_ref_1 = obs.ObsInputFactory.fromName('test source');
-        let test_ref_2 = obs.ObsInputFactory.getPublicSources()[0];
+        let test_ref_1 = obs.InputFactory.fromName('test source');
+        let test_ref_2 = obs.InputFactory.getPublicSources()[0];
 
         t.is(test_source.status, 0);
         t.is(test_source.name, 'test source');

@@ -9,14 +9,14 @@ export async function startup_shutdown(t: any, cb: (t: any) => void, locale?: st
         var locale = 'en-US';
     }
 
-    obs.ObsGlobal.startup(locale);
+    obs.Global.startup(locale);
 
     /* Video Context Setup */
     let obs_d3d11_path = obs.DefaultD3D11Path;
 
     console.log(`Searching for libobs-d3d11 at ${obs_d3d11_path}`);
 
-    let error = obs.ObsVideo.reset({
+    let error = obs.Video.reset({
         'graphicsModule': obs_d3d11_path,
         'fpsNum': 30,
         'fpsDen': 1,
@@ -43,10 +43,10 @@ export async function startup_shutdown(t: any, cb: (t: any) => void, locale?: st
     console.log(`Data Path: ${data_path}`);
     console.log(`Plugin Bin Path: ${plugin_bin_path}`);
     console.log(`Plugin Data Path: ${plugin_data_path}`);
-    obs.ObsModuleFactory.addPath(bin_path, data_path);
-    obs.ObsModuleFactory.addPath(plugin_bin_path, plugin_data_path);
-    obs.ObsModuleFactory.loadAll();
-    obs.ObsModuleFactory.logLoaded();
+    obs.ModuleFactory.addPath(bin_path, data_path);
+    obs.ModuleFactory.addPath(plugin_bin_path, plugin_data_path);
+    obs.ModuleFactory.loadAll();
+    obs.ModuleFactory.logLoaded();
 
     /* Dummy Display */
     var display_init = {
@@ -56,7 +56,7 @@ export async function startup_shutdown(t: any, cb: (t: any) => void, locale?: st
         'zsformat': obs.EZStencilFormat.None
     };
 
-    let display = obs.ObsDisplayFactory.create(display_init);
+    let display = obs.DisplayFactory.create(display_init);
     let simple_draw_path = obs.DefaultDrawPluginPath;
     display.addDrawer(simple_draw_path);
 
@@ -64,5 +64,5 @@ export async function startup_shutdown(t: any, cb: (t: any) => void, locale?: st
 
     display.removeDrawer(simple_draw_path);
     display.destroy();
-    obs.ObsGlobal.shutdown();
+    obs.Global.shutdown();
 }

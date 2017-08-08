@@ -6,7 +6,7 @@ import test from 'ava';
 test('source creation and destruction', async t => {
     await startup_shutdown(t, (t) => {
         let test_source =
-            obs.ObsInputFactory.create('ffmpeg_source', 'test source');
+            obs.InputFactory.create('ffmpeg_source', 'test source');
 
         const iterations = 100;
 
@@ -16,12 +16,12 @@ test('source creation and destruction', async t => {
         t.is(test_source.configurable, true);
 
         let test_filters: obs.IFilter[] = [];
-        let filter_types = obs.ObsFilterFactory.types();
+        let filter_types = obs.FilterFactory.types();
 
         for (var i = 0; i < iterations; i++) {
             filter_types.forEach((element) => {
                 let filter =
-                    obs.ObsFilterFactory.create(element, `${element} ${i}`);
+                    obs.FilterFactory.create(element, `${element} ${i}`);
 
                 t.is(filter.id, `${element}`);
                 t.is(filter.name, `${element} ${i}`);

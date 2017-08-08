@@ -6,7 +6,7 @@ import test from 'ava';
 test('source creation and destruction', async t => {
     await startup_shutdown(t, (t) => {
         let test_source = 
-            obs.ObsInputFactory.create('color_source', 'test source');
+            obs.InputFactory.create('color_source', 'test source');
 
         t.is(test_source.status, 0);
         t.is(test_source.name, 'test source');
@@ -19,7 +19,7 @@ test('source creation and destruction', async t => {
          * at this moment. */
         /* 
         let fail_test_source = 
-            obs.ObsInput.create('color_source', 'test source');
+            obs.Input.create('color_source', 'test source');
 
         t.is(fail_test_source, null);
          */

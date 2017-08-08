@@ -6,13 +6,13 @@ import test from 'ava';
 test('source properties', async t => {
     await startup_shutdown(t, (t) => {
         let test_source_1 = 
-            obs.ObsInputFactory.createPrivate('color_source', 'test source' /* color: 0xffffffff */);
+            obs.InputFactory.createPrivate('color_source', 'test source' /* color: 0xffffffff */);
 
         let test_source_2 = 
-            obs.ObsInputFactory.createPrivate('color_source', 'test source', { color: 0x00000000 });
+            obs.InputFactory.createPrivate('color_source', 'test source', { color: 0x00000000 });
 
         let test_source_3 = 
-            obs.ObsInputFactory.createPrivate('window_capture', 'test source');
+            obs.InputFactory.createPrivate('window_capture', 'test source');
 
         t.is(test_source_1.status, 0);
         t.is(test_source_1.name, 'test source');
@@ -22,12 +22,12 @@ test('source properties', async t => {
 
         let test_source_2_settings = test_source_2.settings;
 
-        t.is(test_source_1.settings["color"], 0xffffffff);
+        t.is(test_source_1.settings.color, 0xffffffff);
 
-        t.is(test_source_2_settings["color"], 0x00000000);
-        test_source_2_settings["color"] = 0xffffffff;
+        t.is(test_source_2_settings.color, 0x00000000);
+        test_source_2_settings.color = 0xffffffff;
         test_source_2.update(test_source_2_settings);
-        t.is(test_source_2.settings["color"], 0xffffffff);
+        t.is(test_source_2.settings.color, 0xffffffff);
 
         let test_source_1_props = test_source_1.properties;
         let prop = test_source_1_props.first();

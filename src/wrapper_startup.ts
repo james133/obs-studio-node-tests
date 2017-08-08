@@ -7,10 +7,10 @@ test('wrapper for startup and shutdown', async t => {
     t.plan(5);
 
     await startup_shutdown(t, (t) => {
-        t.is(obs.ObsGlobal.initialized, true);
-        t.is(obs.ObsGlobal.locale, 'en-US');
+        t.is(obs.Global.initialized, true);
+        t.is(obs.Global.locale, 'en-US');
     });
 
-    t.is(obs.ObsGlobal.initialized, false);
-    t.is(obs.ObsGlobal.locale, undefined);
+    t.is(obs.Global.initialized, false);
+    t.is(obs.Global.locale, undefined);
 });
