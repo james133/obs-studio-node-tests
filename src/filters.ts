@@ -29,6 +29,11 @@ test('source creation and destruction', async t => {
                 t.is(filter.status, 0);
                 test_source.addFilter(filter);
                 test_filters.push(filter);
+
+                let found_filter = test_source.findFilter(filter.name);
+                t.is(found_filter == null, false);
+
+                filter.release();
             });
         }
 
@@ -37,31 +42,14 @@ test('source creation and destruction', async t => {
         let filter_list_fetch = test_source.filters;
         t.is(filter_list_fetch.length, test_filters.length);
 
-        for (var i = 0; i < iterations; i++) {
-            filter_types.forEach((element, idx) => {
-                let index = (i * filter_types.length) + idx;
-                t.is(test_filters[index].id, `${element}`);
-                t.is(test_filters[index].name, `${element} ${i}`);
-                t.is(test_filters[index].configurable, true);
-                t.is(test_filters[index].type, obs.ESourceType.Filter);
-                t.is(test_filters[index].status, 0);
+        test_filters.forEach((element, idx) => {
+            let index = (i * filter_types.length) + idx;
 
-                let found_filter = test_source.findFilter(test_filters[index].name);
-                t.is(found_filter == null, false);
+            test_source.removeFilter(element);
 
-                test_source.removeFilter(test_filters[index]);
-                let removed_filter = test_source.findFilter(test_filters[index].name);
-                t.is(removed_filter, null);
-
-                test_filters[index].release();
-                
-                if (test_filters[index].status == 0) {
-                    console.log(`${test_filters[index].name} failed to destroy`);
-                }
-
-                t.is(test_filters[index].status, 1);
-            });
-        }
+            let removed_filter = test_source.findFilter(element.name);
+            t.is(removed_filter, null);
+        });
 
         test_source.release();
         t.is(test_source.status, 1, "Failed to destroy source");

@@ -3,49 +3,123 @@ import { startup_shutdown } from '../helpers/startup_shutdown'
 import * as path from 'path';
 import test from 'ava';
 
+function test_number(details: obs.INumberProperty, t: any) {
+    t.true(details.max != undefined);
+    t.true(details.min != undefined);
+    t.true(details.step != undefined);
+    t.true(details.type != undefined);
+    t.true(details.type <= obs.ENumberType.Slider);
+    t.true(details.type >= 0);
+}
+
+function test_editable_list(details: obs.IEditableListProperty, t: any) {
+    t.true(details.defaultPath != undefined);
+    t.true(details.filter != undefined);
+    t.true(details.type != undefined);
+    t.true(details.type <= obs.EEditableListType.FilesAndUrls);
+    t.true(details.type >= 0);
+}
+
+function test_list(details: obs.IListProperty, t: any) {
+    t.true(details.format != undefined);
+    t.true(details.format <= obs.EListFormat.String);
+    t.true(details.format >= 0);
+    t.true(details.items != undefined);
+}
+
+function test_path(details: obs.IPathProperty, t: any) {
+    t.true(details.type != undefined);
+    t.true(details.type <= obs.EPathType.Directory);
+    t.true(details.type >= 0);
+}
+
+function test_text(details: obs.ITextProperty, t: any) {
+    t.true(details.type != undefined);
+    t.true(details.type <= obs.ETextType.Multiline);
+    t.true(details.type >= 0);
+}
+
+function test_property(property: obs.IProperty, t: any) {
+    let details = property.details;
+    let type = property.type;
+
+    if (obs.isEditableListProperty(details, type)) {
+        test_editable_list(details, t);
+        test_list(details, t);
+    }
+    else if (obs.isListProperty(details, type)) {
+        test_list(details, t);
+    }
+    else if (obs.isNumberProperty(details, type)) {
+        test_number(details, t);
+    }
+    else if (obs.isPathProperty(details, type)) {
+        test_path(details, t);
+    }
+    else if(obs.isTextProperty(details, type)) {
+        test_text(details, t);
+    }
+    else if (obs.isEmptyProperty(details, type)) {
+        /* No additional information to query */
+    }
+    else  {
+        t.fail(`${property.name} with type ${property.type}`);
+    }
+}
+
 test('source properties', async t => {
     await startup_shutdown(t, (t) => {
-        let test_source_1 = 
-            obs.InputFactory.createPrivate('color_source', 'test source' /* color: 0xffffffff */);
+        let plugin_types = obs.InputFactory.types();
 
-        let test_source_2 = 
-            obs.InputFactory.createPrivate('color_source', 'test source', { color: 0x00000000 });
+        for(let i = 0; i < plugin_types.length; i++) {
+            let source = 
+                obs.InputFactory.create(
+                    plugin_types[i], 
+                    `test ${plugin_types[i]}`
+                );
+            
+            let settings = source.settings;
 
-        let test_source_3 = 
-            obs.InputFactory.createPrivate('window_capture', 'test source');
+            /* This test is useful to indicate 
+               a quartet of bytes represented as 
+               a signed 32-bit integer while still
+               being manipulated in javascript. 
+               
+               0xffffffff is -1 but because it uses
+               two's compliment and enforces bit
+               consistency, we can assume that whatever
+               bits we set will stay set regardless of 
+               how the integer is actually represented. */
+            if (plugin_types[i] === 'color_source') {
+                settings.color = 0xffffffff;
+                source.update(settings);
+                settings = source.settings;
 
-        t.is(test_source_1.status, 0);
-        t.is(test_source_1.name, 'test source');
-        t.is(test_source_1.id, 'color_source');
-        t.is(test_source_1.configurable, true);
-        t.is(test_source_1.type, obs.ESourceType.Input);
+                t.is(settings.color >>> 24, 0xff);
+                t.is(settings.color << 8 >>> 24, 0xff);
+                t.is(settings.color << 16 >>> 24, 0xff);
+                t.is(settings.color << 24 >>> 24, 0xff);
+                t.is(~settings.color, 0);
+                t.is(settings.color, -1);
+            }
 
-        let test_source_2_settings = test_source_2.settings;
+            source.update(settings);
+            console.log(settings);
 
-        t.is(test_source_1.settings.color, 0xffffffff);
+            let property = source.properties.first();
+            let nextProperty: obs.IProperty = property.next();
 
-        t.is(test_source_2_settings.color, 0x00000000);
-        test_source_2_settings.color = 0xffffffff;
-        test_source_2.update(test_source_2_settings);
-        t.is(test_source_2.settings.color, 0xffffffff);
+            if (!property) {
+                source.release();
+                return;
+            }
 
-        let test_source_1_props = test_source_1.properties;
-        let prop = test_source_1_props.first();
+            do {
+                console.log(property.name);
+                test_property(property, t);
+            } while (property = property.next());
 
-        while (!prop.done) {
-            console.log(prop);
-            prop.next();
+            source.release();
         }
-
-        console.log(test_source_3.settings);
-        console.log(test_source_3.properties);
-
-        test_source_1.release();
-        test_source_2.release();
-        test_source_3.release();
-
-        t.is(test_source_1.status, 1);
-        t.is(test_source_2.status, 1);
-        t.is(test_source_3.status, 1);
     });
 });

@@ -34,6 +34,13 @@ export async function startup_shutdown(t: any, cb: (t: any) => void, locale?: st
 
     t.is(error, 0);
 
+    error = obs.Audio.reset({
+        samplesPerSec: 44100,
+        speakerLayout: obs.ESpeakerLayout.Stereo
+    });
+
+    t.is(error, true);
+
     /* Module Loading */
     let bin_path = obs.DefaultBinPath;
     let data_path = obs.DefaultDataPath;

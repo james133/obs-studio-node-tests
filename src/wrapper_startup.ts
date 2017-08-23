@@ -4,7 +4,7 @@ import * as path from 'path';
 import test from 'ava';
 
 test('wrapper for startup and shutdown', async t => {
-    t.plan(5);
+    t.plan(6);
 
     await startup_shutdown(t, (t) => {
         t.is(obs.Global.initialized, true);
