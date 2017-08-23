@@ -106,7 +106,8 @@ test('source properties', async t => {
             source.update(settings);
             console.log(settings);
 
-            let property = source.properties.first();
+            let properties = source.properties;
+            let property = properties.first();
             let nextProperty: obs.IProperty = property.next();
 
             if (!property) {

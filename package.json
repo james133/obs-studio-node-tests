@@ -11,7 +11,18 @@
   "license": "GPL-3.0",
   "ava": {
     "files": [
-      "src/*.js"
+      "src/startup.js",
+      "src/wrapper_startup.js",
+      "src/export_check.js",
+      "src/filters.js",
+      "src/properties.js",
+      "src/source_creation.js",
+      "src/scene_creation.js",
+      "src/scene_items.js",
+      "src/scene_item_deletion.js",
+      "src/transitions.js",
+      "src/output.js",
+      "src/multiple_references.js"
     ],
     "serial": true
   },

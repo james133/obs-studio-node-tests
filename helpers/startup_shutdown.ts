@@ -11,36 +11,6 @@ export async function startup_shutdown(t: any, cb: (t: any) => void, locale?: st
 
     obs.Global.startup(locale);
 
-    /* Video Context Setup */
-    let obs_d3d11_path = obs.DefaultD3D11Path;
-
-    console.log(`Searching for libobs-d3d11 at ${obs_d3d11_path}`);
-
-    let error = obs.Video.reset({
-        'graphicsModule': obs_d3d11_path,
-        'fpsNum': 30,
-        'fpsDen': 1,
-        'outputWidth': 800,
-        'outputHeight': 600,
-        'outputFormat': obs.EOutputFormat.NV12,
-        'baseWidth': 800,
-        'baseHeight': 600,
-        'gpuConversion': true,
-        'adapter': 0,
-        'colorspace': 0,
-        'range': 0,
-        'scaleType': 0
-    });
-
-    t.is(error, 0);
-
-    error = obs.Audio.reset({
-        samplesPerSec: 44100,
-        speakerLayout: obs.ESpeakerLayout.Stereo
-    });
-
-    t.is(error, true);
-
     /* Module Loading */
     let bin_path = obs.DefaultBinPath;
     let data_path = obs.DefaultDataPath;
@@ -52,6 +22,37 @@ export async function startup_shutdown(t: any, cb: (t: any) => void, locale?: st
     console.log(`Plugin Data Path: ${plugin_data_path}`);
     obs.ModuleFactory.addPath(bin_path, data_path);
     obs.ModuleFactory.addPath(plugin_bin_path, plugin_data_path);
+
+    /* Video Context Setup */
+    let obs_d3d11_path = obs.DefaultD3D11Path;
+
+    console.log(`Searching for libobs-d3d11 at ${obs_d3d11_path}`);
+
+    let error = obs.Video.reset({
+        'graphicsModule': obs_d3d11_path,
+        'fpsNum': 30,
+        'fpsDen': 1,
+        'outputWidth': 800,
+        'outputHeight': 600,
+        'outputFormat': obs.EOutputFormat.RGBA,
+        'baseWidth': 800,
+        'baseHeight': 600,
+        'gpuConversion': false,
+        'adapter': 0,
+        'colorspace': obs.EColorSpace.Default,
+        'range': obs.ERangeType.Default,
+        'scaleType': obs.EScaleType.Default
+    });
+
+    t.is(error, 0);
+
+    let audioError = obs.Audio.reset({
+        samplesPerSec: 44100,
+        speakerLayout: obs.ESpeakerLayout.Stereo
+    });
+
+    t.is(audioError, true);
+
     obs.ModuleFactory.loadAll();
     obs.ModuleFactory.logLoaded();
 
