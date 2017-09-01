@@ -3,7 +3,7 @@ import { startup_shutdown } from '../helpers/startup_shutdown'
 import * as path from 'path';
 import test from 'ava';
 
-function test_number(details: obs.INumberProperty, t: any) {
+function test_number(details: obs.INumberDetails, t: any) {
     t.true(details.max != undefined);
     t.true(details.min != undefined);
     t.true(details.step != undefined);
@@ -12,7 +12,7 @@ function test_number(details: obs.INumberProperty, t: any) {
     t.true(details.type >= 0);
 }
 
-function test_editable_list(details: obs.IEditableListProperty, t: any) {
+function test_editable_list(details: obs.IEditableListDetails, t: any) {
     t.true(details.defaultPath != undefined);
     t.true(details.filter != undefined);
     t.true(details.type != undefined);
@@ -20,46 +20,50 @@ function test_editable_list(details: obs.IEditableListProperty, t: any) {
     t.true(details.type >= 0);
 }
 
-function test_list(details: obs.IListProperty, t: any) {
+function test_list(details: obs.IListDetails, t: any) {
     t.true(details.format != undefined);
     t.true(details.format <= obs.EListFormat.String);
     t.true(details.format >= 0);
     t.true(details.items != undefined);
 }
 
-function test_path(details: obs.IPathProperty, t: any) {
+function test_path(details: obs.IPathDetails, t: any) {
     t.true(details.type != undefined);
     t.true(details.type <= obs.EPathType.Directory);
     t.true(details.type >= 0);
 }
 
-function test_text(details: obs.ITextProperty, t: any) {
+function test_text(details: obs.ITextDetails, t: any) {
     t.true(details.type != undefined);
     t.true(details.type <= obs.ETextType.Multiline);
     t.true(details.type >= 0);
 }
 
-function test_property(property: obs.IProperty, t: any) {
-    let details = property.details;
-    let type = property.type;
+function test_button(property: obs.IButtonProperty, source: object, t: any) {
+    property.buttonClicked(source);
+}
 
-    if (obs.isEditableListProperty(details, type)) {
-        test_editable_list(details, t);
-        test_list(details, t);
+function test_property(property: obs.IProperty, source: object, t: any) {
+    if (obs.isEditableListProperty(property)) {
+        test_editable_list(property.details, t);
+        test_list(property.details, t);
     }
-    else if (obs.isListProperty(details, type)) {
-        test_list(details, t);
+    else if (obs.isListProperty(property)) {
+        test_list(property.details, t);
     }
-    else if (obs.isNumberProperty(details, type)) {
-        test_number(details, t);
+    else if (obs.isButtonProperty(property)) {
+        test_button(property, source, t);
     }
-    else if (obs.isPathProperty(details, type)) {
-        test_path(details, t);
+    else if (obs.isNumberProperty(property)) {
+        test_number(property.details, t);
     }
-    else if(obs.isTextProperty(details, type)) {
-        test_text(details, t);
+    else if (obs.isPathProperty(property)) {
+        test_path(property.details, t);
     }
-    else if (obs.isEmptyProperty(details, type)) {
+    else if(obs.isTextProperty(property)) {
+        test_text(property.details, t);
+    }
+    else if (obs.isEmptyProperty(property)) {
         /* No additional information to query */
     }
     else  {
@@ -117,7 +121,7 @@ test('source properties', async t => {
 
             do {
                 console.log(property.name);
-                test_property(property, t);
+                test_property(property, source, t);
             } while (property = property.next());
 
             source.release();
