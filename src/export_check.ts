@@ -4,18 +4,6 @@ import * as path from 'path';
 import test from 'ava';
 
 let IInput_key_table = [
-    //Source
-    'muted',
-    'enabled',
-    'type',
-    'name',
-    'flags',
-    'status',
-    'id',
-    'configurable',
-    'properties',
-    'settings',
-
     //IInput
     'volume',
     'syncOffset',
