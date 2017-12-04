@@ -64,13 +64,10 @@ export async function startup_shutdown(t: any, cb: (t: any) => void, locale?: st
         'zsformat': obs.EZStencilFormat.None
     };
 
-    let display = obs.DisplayFactory.create(display_init);
-    let simple_draw_path = obs.DefaultDrawPluginPath;
-    display.addDrawer(simple_draw_path);
+    let display = obs.DisplayFactory.create();
 
     await cb(t);
 
-    display.removeDrawer(simple_draw_path);
     display.destroy();
     obs.Global.shutdown();
 }
