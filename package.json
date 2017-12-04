@@ -23,17 +23,16 @@
       "src/transitions.js",
       "src/output.js",
       "src/multiple_references.js"
-    ],
-    "serial": true
+    ]
   },
   "cmake-js": {
     "runtime": "node",
-    "runtimeVersion": "7.4.0",
+    "runtimeVersion": "8.9.1",
     "arch": "x64"
   },
   "dependencies": {
     "ava": "^0.20.0",
-    "obs-studio-node": "file:./obs-studio-nan",
+    "obs-studio-node": "file:./obs-studio-node",
     "typescript": "^2.4.2"
   }
 }
