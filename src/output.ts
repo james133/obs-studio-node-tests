@@ -40,6 +40,10 @@ test('output channel setting', async t => {
         source_check = obs.Global.getOutputSource(0);
         t.is(source_check.name, 'test transition');
 
+        const test_output = obs.OutputFactory.create('null_output', 'test output');
+        test_output.start();
+
+        test_output.release();
         test_source.release();
         test_scene.release();
         test_transition.release();

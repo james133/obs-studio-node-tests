@@ -28,13 +28,13 @@ export async function startup_shutdown(t: any, cb: (t: any) => void, locale?: st
 
     console.log(`Searching for libobs-d3d11 at ${obs_d3d11_path}`);
 
-    let error = obs.Video.reset({
+    let error = obs.VideoFactory.reset({
         'graphicsModule': obs_d3d11_path,
         'fpsNum': 30,
         'fpsDen': 1,
         'outputWidth': 800,
         'outputHeight': 600,
-        'outputFormat': obs.EOutputFormat.RGBA,
+        'outputFormat': obs.EVideoFormat.RGBA,
         'baseWidth': 800,
         'baseHeight': 600,
         'gpuConversion': false,
@@ -46,7 +46,7 @@ export async function startup_shutdown(t: any, cb: (t: any) => void, locale?: st
 
     t.is(error, 0);
 
-    let audioError = obs.Audio.reset({
+    let audioError = obs.AudioFactory.reset({
         samplesPerSec: 44100,
         speakerLayout: obs.ESpeakerLayout.Stereo
     });
