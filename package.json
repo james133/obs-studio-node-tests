@@ -32,10 +32,13 @@
     "arch": "x64"
   },
   "dependencies": {
-    "ava": "^0.20.0",
-    "obs-studio-node": "file:./obs-studio-node",
+    "ava": "^0.25.0",
+    "obs-studio-node": "https://ci.appveyor.com/api/buildjobs/qpkt3v41awa4nsb1/artifacts/streamlabs-x86_64-unsigned.tar.gz",
     "prompt": "^1.0.0",
     "sleep": "^5.1.1",
-    "typescript": "^2.4.2"
+    "typescript": "^2.8.1"
+  },
+  "devDependencies": {
+      "@types/node": "^9.6.5"
   }
 }
