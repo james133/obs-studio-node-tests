@@ -26,11 +26,6 @@
       "src/multiple_references.js"
     ]
   },
-  "cmake-js": {
-    "runtime": "node",
-    "runtimeVersion": "8.9.1",
-    "arch": "x64"
-  },
   "dependencies": {
     "ava": "^0.25.0",
     "obs-studio-node": "https://ci.appveyor.com/api/buildjobs/qpkt3v41awa4nsb1/artifacts/streamlabs-x86_64-unsigned.tar.gz",
