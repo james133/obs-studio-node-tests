@@ -1,5 +1,4 @@
 import * as obs from 'obs-studio-node';
-import * as path from 'path';
 import test from 'ava';
 
 test('startup and shutdown', async t => {
