@@ -1998,9 +1998,9 @@ object.omit@^2.0.0:
     for-own "^0.1.4"
     is-extendable "^0.1.1"
 
-"obs-studio-node@https://ci.appveyor.com/api/buildjobs/qpkt3v41awa4nsb1/artifacts/streamlabs-x86_64-unsigned.tar.gz":
+"obs-studio-node@https://ci.appveyor.com/api/buildjobs/k0atb5mjefxo86bv/artifacts/node-v9.4.0-unsigned.tar.gz":
   version "0.0.1"
-  resolved "https://ci.appveyor.com/api/buildjobs/qpkt3v41awa4nsb1/artifacts/streamlabs-x86_64-unsigned.tar.gz#fd740f572747457aadee6c770e14a0b034868c85"
+  resolved "https://ci.appveyor.com/api/buildjobs/k0atb5mjefxo86bv/artifacts/node-v9.4.0-unsigned.tar.gz#68598ba2fed9bf5a9073aa45e62754b8d66f5daa"
 
 observable-to-promise@^0.5.0:
   version "0.5.0"

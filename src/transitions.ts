@@ -16,13 +16,11 @@ test('transition creation and destruction', async t => {
         let test_transition = 
             obs.TransitionFactory.create('fade_transition', 'test transition');
 
-        t.is(test_source_a.status, 0);
         t.is(test_source_a.name, 'test source a');
         t.is(test_source_a.id, 'monitor_capture');
         t.is(test_source_a.configurable, true);
         t.is(test_source_a.type, obs.ESourceType.Input);
 
-        t.is(test_source_b.status, 0);
         t.is(test_source_b.name, 'test source b');
         t.is(test_source_b.id, 'color_source');
         t.is(test_source_b.configurable, true);
@@ -30,7 +28,6 @@ test('transition creation and destruction', async t => {
 
         test_scene.add(test_source_b);
 
-        t.is(test_transition.status, 0);
         t.is(test_transition.name, 'test transition');
         t.is(test_transition.id, 'fade_transition');
         t.is(test_transition.type, obs.ESourceType.Transition);
@@ -55,10 +52,5 @@ test('transition creation and destruction', async t => {
         test_source_a.release();
         test_source_b.release();
         test_scene.release();
-        
-        t.is(test_source_a.status, 1, "Failed to destroy source");
-        t.is(test_source_b.status, 1, "Failed to destroy source");
-        t.is(test_scene.status, 1, "Failed to destroy scene");
-        t.is(test_transition.status, 1, "Failed to destroy transitions");
     });
 });

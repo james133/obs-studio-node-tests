@@ -1,30 +1,16 @@
 import * as obs from 'obs-studio-node';
 
 const prompt = require('prompt');
-
-const locale = "en-US.utf8";
-
-obs.Global.startup(locale);
-
-/* Module Loading */
-let bin_path = obs.DefaultBinPath;
-let data_path = obs.DefaultDataPath;
-let plugin_bin_path = obs.DefaultPluginPath;
-let plugin_data_path = obs.DefaultPluginDataPath;
-console.log(`Bin Path: ${bin_path}`);
-console.log(`Data Path: ${data_path}`);
-console.log(`Plugin Bin Path: ${plugin_bin_path}`);
-console.log(`Plugin Data Path: ${plugin_data_path}`);
-obs.ModuleFactory.addPath(bin_path, data_path);
-obs.ModuleFactory.addPath(plugin_bin_path, plugin_data_path);
+const path = require('path');
 
 /* Video Context Setup */
-let obs_d3d11_path = obs.DefaultD3D11Path;
+const wd = path.join(__dirname, '..', '..', 'node_modules', 'obs-studio-node');
 
-console.log(`Searching for libobs-d3d11 at ${obs_d3d11_path}`);
+obs.NodeObs.SetWorkingDirectory(wd);
+obs.NodeObs.OBS_API_initAPI(path.join(__dirname, '..', 'AppData'));
 
 let error = obs.VideoFactory.reset({
-    'graphicsModule': obs_d3d11_path,
+    'graphicsModule': 'libobs-d3d11',
     'fpsNum': 30,
     'fpsDen': 1,
     'outputWidth': 800,
@@ -116,5 +102,5 @@ prompt.get(['signal'], (err: any, result: any) => {
     test_scene.release();
     test_source.release();
     test_audio_source.release();
-    obs.Global.shutdown()
+    obs.NodeObs.OBS_API_destroyOBS_API();
 });

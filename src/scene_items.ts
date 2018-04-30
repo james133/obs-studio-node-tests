@@ -2,7 +2,7 @@ import * as obs from 'obs-studio-node';
 import { startup_shutdown } from '../helpers/startup_shutdown'
 import test from 'ava';
 
-test('scene creation and destruction', async t => {
+test('scene item creation and destruction', async t => {
     await startup_shutdown(t, (t) => {
         {
             let test_scene = obs.SceneFactory.create('test scene');
@@ -15,7 +15,6 @@ test('scene creation and destruction', async t => {
                 let item = test_scene.add(source);
                 source.release();
                 sources.push(item.source);
-                t.is(sources[i].status, 0);
                 items.push(item);
             };
 
@@ -108,11 +107,6 @@ test('scene creation and destruction', async t => {
             };
 
             test_scene.release();
-            t.is(test_scene.status, 1);
-
-            for (let i = 0; i < iterations; i++) {
-                t.is(sources[i].status, 1);
-            }
         }
 
         {
@@ -125,7 +119,6 @@ test('scene creation and destruction', async t => {
                 let source = obs.InputFactory.create('color_source', `test source ${i}`);
                 let item = test_scene.add(source);
                 sources.push(item.source);
-                t.is(sources[i].status, 0);
                 items.push(item);
             };
 
@@ -150,11 +143,6 @@ test('scene creation and destruction', async t => {
             });
 
             test_scene.release();
-            t.is(test_scene.status, 1);
-
-            for (let i = 0; i < iterations; i++) {
-                t.is(sources[i].status, 1);
-            }
         }
 
         {
@@ -167,7 +155,6 @@ test('scene creation and destruction', async t => {
                 let source = obs.InputFactory.create('color_source', `test source ${i}`);
                 let item = test_scene.add(source);
                 sources.push(item.source);
-                t.is(sources[i].status, 0);
                 items.push(item);
                 t.is(obs.InputFactory.fromName(source.name) != null, true);
                 t.is(obs.SceneFactory.fromName(test_scene.name) != null, true);
@@ -195,11 +182,6 @@ test('scene creation and destruction', async t => {
             };
 
             test_scene.release();
-            t.is(test_scene.status, 1);
-
-            for (let i = 0; i < iterations; i++) {
-                t.is(sources[i].status, 1);
-            }
         }
     });
 });

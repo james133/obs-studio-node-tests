@@ -6,7 +6,7 @@ test('source creation and destruction', async t => {
     await startup_shutdown(t, (t) => {
         let types = obs.InputFactory.types();
         let test_sources: obs.IInput[] = [];
-        const iterations = 100;
+        const iterations = 20;
 
         console.log(types);
 
@@ -19,4 +19,6 @@ test('source creation and destruction', async t => {
             }
         }
     });
+
+    t.pass();
 });

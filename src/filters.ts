@@ -9,7 +9,6 @@ test('filter creation and destruction', async t => {
 
         const iterations = 50;
 
-        t.is(test_source.status, 0);
         t.is(test_source.name, 'test source');
         t.is(test_source.id, 'ffmpeg_source');
         t.is(test_source.configurable, true);
@@ -29,7 +28,6 @@ test('filter creation and destruction', async t => {
                 t.is(filter.id, `${type}`);
                 t.is(filter.name, `${type} ${i}`);
 
-                t.is(filter.status, 0);
                 test_source.addFilter(filter);
                 test_filters[index] = filter;
 
@@ -42,6 +40,5 @@ test('filter creation and destruction', async t => {
         }
         
         test_source.release();
-        t.is(test_source.status, 1, "Failed to destroy source");
     });
 });

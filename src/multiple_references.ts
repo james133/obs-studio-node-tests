@@ -10,27 +10,22 @@ test('multiple references', async t => {
         let test_ref_1 = obs.InputFactory.fromName('test source');
         let test_ref_2 = obs.InputFactory.getPublicSources()[0];
 
-        t.is(test_source.status, 0);
         t.is(test_source.name, 'test source');
         t.is(test_source.id, 'color_source');
         t.is(test_source.configurable, true);
         t.is(test_source.type, obs.ESourceType.Input);
     
-        t.is(test_ref_1.status, 0);
         t.is(test_ref_1.name, 'test source');
         t.is(test_ref_1.id, 'color_source');
         t.is(test_ref_1.configurable, true);
         t.is(test_ref_1.type, obs.ESourceType.Input);
 
-        t.is(test_ref_2.status, 0);
         t.is(test_ref_2.name, 'test source');
         t.is(test_ref_2.id, 'color_source');
         t.is(test_ref_2.configurable, true);
         t.is(test_ref_2.type, obs.ESourceType.Input);
 
         test_ref_2.release();
-        
-        t.is(test_source.status, 1);
 
         test_ref_1.release();
         test_source.release();
