@@ -10,6 +10,7 @@ test('startup and shutdown', async t => {
     obs.NodeObs.SetWorkingDirectory(wd);
     obs.NodeObs.OBS_API_initAPI(path.join(__dirname, '..', 'AppData'));
     obs.NodeObs.OBS_API_destroyOBS_API();
+    obs.NodeObs.IPC.disconnect();
 
-    t.pass();
+    t.pass();	
 });

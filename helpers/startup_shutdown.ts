@@ -19,8 +19,15 @@ export async function startup_shutdown(t: any, cb: (t: any) => void, locale?: st
     obs.NodeObs.IPC.ConnectOrHost(pipeName);
     obs.NodeObs.SetWorkingDirectory(wd);
     obs.NodeObs.OBS_API_initAPI(path.join(__dirname, '..', 'AppData'));
-
-    await cb(t);
+    try {
+        await cb(t);
+    } catch (e) {
+        // Ava has this weird concept of completely fucking up the entire process if a v8 exception happens that is not caught.
+        // So lets catch it, disconnect, and continue because what else can we do?
+        obs.NodeObs.IPC.disconnect();
+        throw e;
+    }
 
     obs.NodeObs.OBS_API_destroyOBS_API();
+    obs.NodeObs.IPC.disconnect();
 }
