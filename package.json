@@ -1,40 +1,26 @@
 {
   "name": "obs-studio-node-test",
   "version": "1.0.0",
-  "description": "Experimental bindings to obs-studio using nan directly",
+  "description": "OBS Studio Node Unit Testing",
   "scripts": {
     "build": "tsc",
-    "test": "ava",
+    "test": "mocha --timeout 10000 -r ts-node/register src/**/*.ts",
     "test:service": "node src/service/stream.js"
   },
-  "author": "Zachary Lund <zachary.lund@streamlabs.com>",
+  "author": "Streamlabs",
   "license": "GPL-3.0",
-  "ava": {
-    "serial": true,
-    "failWithoutAssertions": false,
-    "files": [
-      "src/startup.js",
-      "src/wrapper_startup.js",
-      "src/export_check.js",
-      "src/filters.js",
-      "src/properties.js",
-      "src/source_creation.js",
-      "src/scene_creation.js",
-      "src/scene_items.js",
-      "src/scene_item_deletion.js",
-      "src/transitions.js",
-      "src/output.js",
-      "src/multiple_references.js"
-    ]
-  },
   "dependencies": {
-    "ava": "^0.25.0",
-    "obs-studio-node": "https://ci.appveyor.com/api/buildjobs/k0atb5mjefxo86bv/artifacts/node-v9.4.0-unsigned.tar.gz",
+    "obs-studio-node": "https://obsstudionodes3.streamlabs.com/obs-studio-node-v0.3.79-iojs-v2.0.8.tar.gz",
     "prompt": "^1.0.0",
     "sleep": "^5.1.1",
     "typescript": "^2.8.1"
   },
   "devDependencies": {
-      "@types/node": "^9.6.5"
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^9.6.5",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "ts-node": "^7.0.1"
   }
 }
