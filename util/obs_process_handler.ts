@@ -1,15 +1,15 @@
-import * as obs from 'obs-studio-node';
+import * as osn from 'obs-studio-node';
 
-export class ConnectionHandler {
+export class OBSProcessHandler {
     startup(): boolean {
         const path = require('path');
         const wd = path.join(__dirname, '..', 'node_modules', 'obs-studio-node');
         const pipeName = 'osn-tests-pipe';  
 
         try {
-            obs.NodeObs.IPC.ConnectOrHost(pipeName);
-            obs.NodeObs.SetWorkingDirectory(wd);
-            obs.NodeObs.OBS_API_initAPI('en-US', path.join(__dirname, '..', 'AppData'));
+            osn.NodeObs.IPC.ConnectOrHost(pipeName);
+            osn.NodeObs.SetWorkingDirectory(wd);
+            osn.NodeObs.OBS_API_initAPI('en-US', path.join(__dirname, '..', 'AppData'));
         } catch(e) {
             return false;
         }
@@ -19,8 +19,8 @@ export class ConnectionHandler {
 
     shutdown(): boolean {
         try {
-            obs.NodeObs.OBS_API_destroyOBS_API();
-            obs.NodeObs.IPC.disconnect();
+            osn.NodeObs.OBS_API_destroyOBS_API();
+            osn.NodeObs.IPC.disconnect();
         } catch(e) {
             return false;
         }
